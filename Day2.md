@@ -110,7 +110,34 @@ View extended details to find the internal IP address assigned to the Pod by the
 Examine the Pod's lifecycle events and configuration details, including the container ID and image hash.
 ``` kubectl describe pod nginx-pod ```
 
+---
 
+---
+Inspect Pod Details
+
+Objective
+A developer reported that the new 'monitor-app' pod is failing to start. Your goal is to investigate the failure using Kubernetes inspection tools. You need to identify why the container is crashing and check the internal logs to see the application's last error message before it stopped.
+
+Commands
+Create the pod using the provided manifest file.
+``` kubectl apply -f monitor-pod.yaml ```
+
+Check the status of the pod to see if it is running or crashing.
+```kubectl get pods```
+
+Inspect the pod events and container state to see why it restarted.
+```kubectl describe pod monitor-app```
+
+View the application logs to find the specific error message that caused the crash.
+```kubectl logs monitor-app```
+
+
+
+
+
+
+
+---
 
 
 
