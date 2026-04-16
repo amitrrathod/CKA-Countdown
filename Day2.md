@@ -90,4 +90,31 @@ This is exactly how it works. Since they share the same network stack and IP, th
 
 ---
 
+---
+
+Deploy Your First Pod
+
+Objective
+In Kubernetes, a Pod is the smallest deployable unit. When you run a container, Kubernetes wraps it in a Pod to provide a shared network namespace and IP address. In this task, you will deploy a standalone Nginx web server as a Pod and explore its details to see how Kubernetes assigns it a unique cluster IP.
+
+Commands
+Create a new Pod named 'nginx-pod' using the lightweight Nginx Alpine image.
+```kubectl run nginx-pod --image=nginx:alpine```
+
+Check the status of your Pod. Wait until the 'STATUS' column shows 'Running'.
+```kubectl get pods```
+
+View extended details to find the internal IP address assigned to the Pod by the cluster.
+```kubectl get pod nginx-pod -o wide```
+
+Examine the Pod's lifecycle events and configuration details, including the container ID and image hash.
+``` kubectl describe pod nginx-pod ```
+
+
+
+
+
+
+
+---
 
