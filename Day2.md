@@ -131,8 +131,6 @@ Inspect the pod events and container state to see why it restarted.
 View the application logs to find the specific error message that caused the crash.
 ```kubectl logs monitor-app```
 ---
-
----
 Kubernetes Pod Failure States
 
 Your application code crashes on startup or your image registry requires credentials you forgot to provide. When these issues occur, the Kubelet on the node updates the Pod's status.phase and status.containerStatuses fields to reflect the failure.
@@ -143,6 +141,7 @@ Kubernetes uses these states to signal specific lifecycle bottlenecks within the
 • CrashLoopBackOff: The container starts but exits with a non-zero exit code or terminates immediately. Kubernetes applies an exponential backoff delay (10s, 20s, 40s...) before restarting the container to prevent resource exhaustion.
 • Pending: The Scheduler cannot place the Pod on a node. This happens when no node meets the resourceRequests (CPU/Memory) or nodeSelector constraints defined in the spec.
 To diagnose these, you must inspect the Events and ExitCode fields.
+
 ---
 
 ```
@@ -151,6 +150,7 @@ kubectl get pods
 
 # Inspect the 'Events' section for the exact error message
 kubectl describe pod <pod-name>
+
 ```
 
 Look for these specific technical indicators in the output:
@@ -158,8 +158,8 @@ Look for these specific technical indicators in the output:
 • Exit Code 1: General error; often an unhandled exception in your application code.
 • Exit Code 137: The container received a SIGKILL. This typically means the OOM (Out Of Memory) Killer terminated the process because it exceeded its resources.limits.memory.
 • Reason: ImagePullBackOff: Check the Events log. If you see pull access denied, verify your imagePullSecrets.
-If a Pod stays Pending, check the Events for FailedScheduling. It will explicitly list how many nodes had insufficient CPU or memory.
 
+If a Pod stays Pending, check the Events for FailedScheduling. It will explicitly list how many nodes had insufficient CPU or memory.
 Key Takeaway: Pod failures are reported via the PodStatus API; use kubectl describe to find the specific Exit Code or Scheduler event causing the stall.
 
 
